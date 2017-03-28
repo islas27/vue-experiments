@@ -7,7 +7,7 @@
 
 <script>
 import CreateNoteForm from './components/notes/Create'
-import Notes from './components/notes/Index'
+import Notes from './components/notes/Notes'
 
 // import firebase from 'firebase/app'
 // import 'firebase/database'

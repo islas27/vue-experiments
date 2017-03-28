@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import data from '../../data/Index'
+import noteRepository from '../../data/NoteRepository'
 export default {
   data () {
     return {
@@ -20,10 +20,8 @@ export default {
     createNote () {
       if (this.title.trim() || this.content.trim()) {
         console.log(this.$firebase)
-        data.notes.push({title: this.title, content: this.content}, (err) => {
-          if (err) {
-            throw err
-          }
+        noteRepository.create({title: this.title, content: this.content}, err => {
+          if (err) throw err // TODO: inform the user
           this.title = ''
           this.content = ''
         })
