@@ -1,6 +1,6 @@
-# example1
+# Vue-Notes
 
-> A Vue.js project
+> A Vue.js project wade with Firebase inside
 
 ## Build Setup
 
