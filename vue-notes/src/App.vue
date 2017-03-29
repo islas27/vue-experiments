@@ -17,12 +17,6 @@ export default {
     activatedAlerts () {
       return this.$store.getters.getActivatedAlerts
     }
-  },
-  mounted () {
-    this.$store.commit('attachFirebaseListeners')
-  },
-  destroyed () {
-    this.$store.commit('detachFirebaseListeners')
   }
 }
 </script>

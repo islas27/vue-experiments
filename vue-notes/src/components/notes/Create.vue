@@ -18,7 +18,7 @@ export default {
   methods: {
     createNote () {
       if (this.title.trim() || this.content.trim()) {
-        this.$store.commit('createNote', {title: this.title, content: this.content})
+        this.$store.dispatch('createNote', {title: this.title, content: this.content})
         this.title = ''
         this.content = ''
       }

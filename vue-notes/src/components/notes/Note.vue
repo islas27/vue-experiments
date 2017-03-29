@@ -16,10 +16,10 @@ export default {
   props: ['note'],
   methods: {
     remove (note) {
-      this.$store.commit('deleteNote', note)
+      this.$store.dispatch('deleteNote', note)
     },
     update (note) {
-      this.$store.commit('selectNote', note)
+      this.$store.commit('SELECT_NOTE', note)
     }
   }
 }

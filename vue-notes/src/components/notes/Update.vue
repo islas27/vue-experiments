@@ -17,14 +17,15 @@ export default {
   props: ['note'],
   methods: {
     remove () {
-      this.$store.commit('deleteNote', this.note)
+      this.$store.dispatch('deleteNote', this.note)
+      this.dismissModal()
     },
     update () {
-      this.$store.commit('updateNote', this.note)
+      this.$store.dispatch('updateNote', this.note)
       this.dismissModal()
     },
     dismissModal () {
-      this.$store.commit('unselectNote')
+      this.$store.commit('UNSELECT_NOTE')
     }
   }
 }
