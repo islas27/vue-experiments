@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <alerts :alerts="activatedAlerts"></alerts>
     <create-note-form></create-note-form>
     <notes></notes>
     <update :note.sync="selectedNote"></update>
@@ -10,10 +11,12 @@
 import CreateNoteForm from './components/notes/Create'
 import Notes from './components/notes/Notes'
 import Update from './components/notes/Update'
+import Alerts from './components/Alerts'
 
 export default {
   name: 'app',
   components: {
+    Alerts,
     Notes,
     CreateNoteForm,
     Update
@@ -21,10 +24,16 @@ export default {
   computed: {
     selectedNote () {
       return this.$store.getters.getSelectedNote
+    },
+    activatedAlerts () {
+      return this.$store.getters.getActivatedAlerts
     }
   },
   mounted () {
     this.$store.commit('attachFirebaseListeners')
+  },
+  destroyed () {
+    this.$store.commit('detachFirebaseListeners')
   }
 }
 </script>
