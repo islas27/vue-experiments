@@ -6,11 +6,15 @@ import Auth from '../components/Auth'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/notes',
       name: 'Notes',
-      component: Notes
+      component: Notes,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/auth',

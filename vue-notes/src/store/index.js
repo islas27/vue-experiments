@@ -6,6 +6,7 @@ import * as types from './mutation-types'
 import * as actions from './actions'
 import * as getters from './getters'
 import notes from './modules/notes'
+import users from './modules/users'
 
 // Use Vuex
 Vue.use(Vuex)
@@ -13,24 +14,26 @@ firebase.initializeApp(config)
 
 // Set firebase reference
 let db = firebase.database()
-let store
+let auth = firebase.auth
 
-export default store = new Vuex.Store({
+export default new Vuex.Store({
   getters,
   actions,
   state: {
     alerts: [],
-    db: db
+    db,
+    auth
   },
   modules: {
-    notes
+    notes,
+    users
   },
   mutations: {
     [types.ACTIVATE_ALERT] (state, alert) {
-      store.state.alerts.push(alert)
+      state.alerts.push(alert)
     },
     [types.EXPIRE_ALERT] (state) {
-      store.state.alerts.pop()
+      state.alerts.pop()
     }
   }
 })

@@ -10,6 +10,14 @@ Vue.config.productionTip = false
 
 Vue.use(VueFire)
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.authRequired && (!store.getters.getAuth)) {
+    next({ path: '/auth' })
+  } else {
+    next()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

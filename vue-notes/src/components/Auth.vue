@@ -22,10 +22,9 @@
     </div>
     <hr>
     <div class="social-providers">
-      <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-      <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-      <a href="#"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
-      <a href="#"><i class="fa fa-github-square" aria-hidden="true"></i></a>
+      <a href="#" v-on:click.prevent="signInWithProvider('google')">
+        <i class="fa fa-google-plus-square" aria-hidden="true"></i>
+      </a>
     </div>
   </form>
 </template>
@@ -38,6 +37,36 @@ export default {
       password: '',
       confirmPassword: '',
       wantsToSignUp: false
+    }
+  },
+  computed: {
+    credential () {
+      return {email: this.email, password: this.password}
+    },
+    authorized () {
+      return this.$store.getters.getAuth
+    }
+  },
+  watch: {
+    'authorized': { // watch the notes array for changes
+      handler () {
+        if (this.authorized) this.$router.push('Notes')
+      }
+    }
+  },
+  methods: {
+    signUpWithPassword () {
+      if (this.password === this.confirmPassword) {
+        this.$store.dispatch('signUpWithPassword', this.credential)
+      }
+    },
+    signInWithPassword () {
+      if (this.email.length > 0 && this.password.length > 0) {
+        this.$store.dispatch('signInWithPassword', this.credential)
+      }
+    },
+    signInWithProvider (socialNetwork) {
+      this.$store.dispatch('signInWithProvider', socialNetwork)
     }
   }
 }
