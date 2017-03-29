@@ -18,6 +18,7 @@ function errorLogging (err, msg, type) {
   }
   store.commit('activateAlert', alert)
 }
+
 function successLogging (msg, type) {
   let alert = {
     type: type,
