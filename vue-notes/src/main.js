@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import VueFire from 'vuefire'
 import App from './App'
-import store from './data/store'
+import store from './store/Index'
 import router from './router'
 
 Vue.config.productionTip = false
