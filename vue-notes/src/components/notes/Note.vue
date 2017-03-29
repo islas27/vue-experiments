@@ -2,24 +2,24 @@
   <div class="note">
     <h1>{{note.title}}</h1>
     <pre>{{note.content}}</pre>
-    <button type="button" v-on:click.stop="remove">
+    <button type="button" @click.stop="remove(note)">
       <i class="fa fa-trash-o" aria-hidden="true"></i>
     </button>
-    <button class="edit" type="button">
+    <button class="edit" type="button" @click="update(note)">
       <i class="fa fa-pencil" aria-hidden="true"></i>
     </button>
   </div>
 </template>
 
 <script>
-import noteRepository from '../../data/NoteRepository'
 export default {
   props: ['note'],
   methods: {
-    remove () {
-      noteRepository.remove(this.note, err => {
-        if (err) throw err
-      })
+    remove (note) {
+      this.$store.commit('deleteNote', note)
+    },
+    update (note) {
+      this.$store.commit('selectNote', note)
     }
   }
 }

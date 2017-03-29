@@ -6,25 +6,24 @@
 
 <script>
 import Note from './Note'
-import noteRepository from '../../data/NoteRepository'
 import Masonry from 'masonry-layout'
 
 export default {
   components: {
     Note
   },
-  data () {
-    return {
-      notes: []
+  computed: {
+    notes () {
+      return this.$store.getters.getNotes
     }
   },
   watch: {
     'notes': { // watch the notes array for changes
       handler () {
-        setTimeout(() => {
+        this.$nextTick(function () {
           this.masonry.reloadItems()
           this.masonry.layout()
-        }, 200)
+        })
       },
       deep: true // we also want to watch changed inside individual notes
     }
@@ -35,18 +34,6 @@ export default {
       columnWidth: 240,
       gutter: 16,
       fitWidth: true
-    })
-    noteRepository.on('added', (note) => {
-      this.notes.unshift(note)
-    })
-    noteRepository.on('changed', ({key, title, content}) => {
-      let outdatedNote = noteRepository.find(this.notes, key) // get specific note from the notes in our VM by key
-      outdatedNote.title = title
-      outdatedNote.content = content
-    })
-    noteRepository.on('removed', ({key}) => {
-      let noteToRemove = noteRepository.find(this.notes, key) // get specific note from the notes in our VM by key
-      this.notes = this.notes.filter(note => note !== noteToRemove)
     })
   }
 }

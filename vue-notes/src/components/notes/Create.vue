@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import noteRepository from '../../data/NoteRepository'
 export default {
   data () {
     return {
@@ -19,12 +18,9 @@ export default {
   methods: {
     createNote () {
       if (this.title.trim() || this.content.trim()) {
-        console.log(this.$firebase)
-        noteRepository.create({title: this.title, content: this.content}, err => {
-          if (err) throw err // TODO: inform the user
-          this.title = ''
-          this.content = ''
-        })
+        this.$store.commit('createNote', {title: this.title, content: this.content})
+        this.title = ''
+        this.content = ''
       }
     }
   }

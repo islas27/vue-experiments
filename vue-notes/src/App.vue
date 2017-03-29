@@ -2,35 +2,30 @@
   <div id="app">
     <create-note-form></create-note-form>
     <notes></notes>
+    <update :note.sync="selectedNote"></update>
   </div>
 </template>
 
 <script>
 import CreateNoteForm from './components/notes/Create'
 import Notes from './components/notes/Notes'
-
-// import firebase from 'firebase/app'
-// import 'firebase/database'
-//
-// const config = {
-//   apiKey: 'AIzaSyDkoASntC6pMw9g0HE-Mx8q4lf0jpAb9LQ',
-//   databaseURL: 'https://vue-notes-72f32.firebaseio.com/'
-// }
-//
-// let app = firebase.initializeApp(config)
-// let db = app.database()
+import Update from './components/notes/Update'
 
 export default {
   name: 'app',
   components: {
     Notes,
-    CreateNoteForm
+    CreateNoteForm,
+    Update
+  },
+  computed: {
+    selectedNote () {
+      return this.$store.getters.getSelectedNote
+    }
+  },
+  mounted () {
+    this.$store.commit('attachFirebaseListeners')
   }
-  // firebase: (function () {
-  //   return {
-  //     notes: db.ref('notes')
-  //   }
-  // }())
 }
 </script>
 
