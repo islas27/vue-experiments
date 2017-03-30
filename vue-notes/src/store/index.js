@@ -22,7 +22,8 @@ export default new Vuex.Store({
   state: {
     alerts: [],
     db,
-    auth
+    auth,
+    notesPath: ''
   },
   modules: {
     notes,
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     [types.EXPIRE_ALERT] (state) {
       state.alerts.pop()
+    },
+    [types.SET_NOTES_PATH] (state, path) {
+      state.notesPath = path
     }
   }
 })

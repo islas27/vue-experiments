@@ -17,15 +17,15 @@ const getters = {
 
 const actions = {
   attachFirebaseListeners ({ state, commit, rootState, dispatch }) {
-    state.notesRepo = rootState.db.ref('notes')
+    state.notesRepo = rootState.db.ref(rootState.notesPath)
     state.notesRepo.on('child_added', (snapshot) => { dispatch('onNoteAdded', snapshot) })
     state.notesRepo.on('child_removed', (snapshot) => { dispatch('onNoteDeleted', snapshot) })
     state.notesRepo.on('child_changed', (snapshot) => { dispatch('onNoteUpdated', snapshot) })
   },
   detachFirebaseListeners ({ state, commit, rootState, dispatch }) {
-    state.notesRepo.off('child_added', (snapshot) => { dispatch('onNoteAdded', snapshot) })
-    state.notesRepo.off('child_removed', (snapshot) => { dispatch('onNoteDeleted', snapshot) })
-    state.notesRepo.off('child_changed', (snapshot) => { dispatch('onNoteUpdated', snapshot) })
+    state.notesRepo.off('child_added')
+    state.notesRepo.off('child_removed')
+    state.notesRepo.off('child_changed')
   },
   snapshotToNote ({ state, commit, rootState, dispatch }, snapshot) {
     let key = snapshot.getKey()

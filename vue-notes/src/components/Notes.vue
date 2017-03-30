@@ -22,12 +22,6 @@ export default {
     selectedNote () {
       return this.$store.getters.getSelectedNote
     }
-  },
-  mounted () {
-    this.$store.dispatch('attachFirebaseListeners')
-  },
-  destroyed () {
-    this.$store.dispatch('detachFirebaseListeners')
   }
 }
 </script>

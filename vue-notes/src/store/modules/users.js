@@ -3,22 +3,21 @@ import { errorAlert, successAlert } from '../helpers'
 
 const state = {
   auth: false,
-  currentUser: null
+  currentUser: null,
+  uid: ''
 }
 
 const getters = {
   getUser: state => state.currentUser,
   getAuth: state => state.auth,
-  getUid: state => state.currentUser.uid
+  getUid: state => state.uid
 }
 
 const actions = {
   signUpWithPassword ({ commit, state, dispatch, rootState }, credential) {
     rootState.auth().createUserWithEmailAndPassword(credential.email, credential.password)
     .then((user) => {
-      commit(types.SET_USER, user)
-      let alert = successAlert('Signed up and in successfully', 'success')
-      dispatch('sendAlert', alert, { root: true })
+      dispatch('signIn', user)
     })
     .catch((error) => {
       console.log(error)
@@ -29,9 +28,7 @@ const actions = {
   signInWithPassword ({ commit, state, dispatch, rootState }, credential) {
     rootState.auth().signInWithEmailAndPassword(credential.email, credential.password)
     .then((user) => {
-      commit(types.SET_USER, user)
-      let alert = successAlert('Signed in successfully', 'success')
-      dispatch('sendAlert', alert, { root: true })
+      dispatch('signIn', user)
     })
     .catch((error) => {
       console.log(error)
@@ -48,9 +45,7 @@ const actions = {
     }
     rootState.auth().signInWithPopup(provider)
     .then((result) => {
-      commit(types.SET_USER, result.user)
-      let alert = successAlert('Signed in successfully', 'success')
-      dispatch('sendAlert', alert, { root: true })
+      dispatch('signIn', result.user)
       // var token = result.credential.accessToken
     })
     .catch((error) => {
@@ -59,12 +54,19 @@ const actions = {
       dispatch('sendAlert', alert, { root: true })
     })
   },
+  signIn ({ commit, state, dispatch, rootState }, user) {
+    commit(types.SET_USER, user)
+    dispatch('sendAlert', alert, { root: true })
+    dispatch('setNotesPath', user.uid, {root: true})
+    dispatch('attachFirebaseListeners')
+  },
   signOut ({ commit, state, dispatch, rootState }) {
     rootState.auth().signOut()
     .then(() => {
       commit(types.SET_USER, null)
       let alert = successAlert('Signed out successfully', 'success')
       dispatch('sendAlert', alert, { root: true })
+      dispatch('detachFirebaseListeners')
       dispatch('cleanUp')
     })
     .catch((error) => {
