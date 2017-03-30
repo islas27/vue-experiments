@@ -13,8 +13,16 @@ export default {
     Note
   },
   computed: {
+    searchQuery () {
+      return this.$store.getters.getSearchQuery
+    },
     notes () {
-      return this.$store.getters.getNotes
+      let notes = this.$store.getters.getNotes
+      if (this.searchQuery.length === 0) return notes
+      else {
+        return notes.filter((note) => note.title.indexOf(this.searchQuery) !== -1 ||
+          note.content.indexOf(this.searchQuery) !== -1)
+      }
     }
   },
   watch: {

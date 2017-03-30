@@ -4,13 +4,15 @@ import { errorAlert, successAlert } from '../helpers'
 const state = {
   notes: [],
   selectedNote: null,
+  searchQuery: '',
   notesRepo: null
 }
 
 // getters
 const getters = {
   getSelectedNote: state => state.selectedNote,
-  getNotes: state => state.notes
+  getNotes: state => state.notes,
+  getSearchQuery: state => state.searchQuery
 }
 
 const actions = {
@@ -79,6 +81,12 @@ const actions = {
       let alert = errorAlert(err, 'Note impossible to update', 'error')
       dispatch('sendAlert', alert, { root: true })
     })
+  },
+  cleanUp ({ state, commit, rootState, dispatch }) {
+    commit(types.CLEAN_UP_NOTES)
+  },
+  filterNotes ({ state, commit, rootState, dispatch }, searchQuery) {
+    commit(types.SET_SEARCH_QUERY, searchQuery)
   }
 }
 
@@ -98,6 +106,13 @@ const mutations = {
   },
   [types.UPDATE_NOTE] (state, note, indexToUpdate) {
     state.notes[indexToUpdate] = note
+  },
+  [types.CLEAN_UP_NOTES] (state) {
+    state.notes = []
+    state.selectedNote = null
+  },
+  [types.SET_SEARCH_QUERY] (state, searchQuery) {
+    state.searchQuery = searchQuery
   }
 }
 

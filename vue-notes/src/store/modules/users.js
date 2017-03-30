@@ -3,13 +3,13 @@ import { errorAlert, successAlert } from '../helpers'
 
 const state = {
   auth: false,
-  currentUserCredential: ''
+  currentUser: null
 }
 
 const getters = {
-  getUser: state => state.currentUserCredential,
+  getUser: state => state.currentUser,
   getAuth: state => state.auth,
-  getUid: state => state.currentUserCredential.uid
+  getUid: state => state.currentUser.uid
 }
 
 const actions = {
@@ -65,6 +65,7 @@ const actions = {
       commit(types.SET_USER, null)
       let alert = successAlert('Signed out successfully', 'success')
       dispatch('sendAlert', alert, { root: true })
+      dispatch('cleanUp')
     })
     .catch((error) => {
       console.log(error)
@@ -76,7 +77,7 @@ const actions = {
 
 const mutations = {
   [types.SET_USER] (state, user) {
-    state.currentUserCredential = user
+    state.currentUser = user
     state.auth = !!user
   }
 }

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <header-bar></header-bar>
     <alerts :alerts="activatedAlerts"></alerts>
     <router-view></router-view>
   </div>
@@ -7,11 +8,13 @@
 
 <script>
 import Alerts from './components/Alerts'
+import HeaderBar from './components/HeaderBar'
 
 export default {
   name: 'app',
   components: {
-    Alerts
+    Alerts,
+    HeaderBar
   },
   computed: {
     activatedAlerts () {

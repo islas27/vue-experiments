@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div id="notes">
     <create-note-form></create-note-form>
     <notes></notes>

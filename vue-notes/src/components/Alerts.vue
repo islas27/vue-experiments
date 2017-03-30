@@ -15,9 +15,10 @@ export default {
 </script>
 
 <style lang="css">
+
   .alerts{
     position: fixed;
-    top: 0;
+    top: 50px;
     left: 0;
     right: 0;
     z-index: 1;
